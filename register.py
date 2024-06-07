@@ -109,12 +109,6 @@ class Register:
         b1.place(x=370, y=420, width=200)
 
 
-    def register_data(self):
-    if (self.var_fname.get() == "" or 
-        self.var_email.get() == "" or 
-        self.var_securityQ.get() == "Your Crush"):
-
-
 if __name__=="__main__":  
         root=Tk()
         app=Register(root)
