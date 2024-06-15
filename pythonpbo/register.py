@@ -13,13 +13,13 @@ class Register:
 
 
         #==============bg image==========
-        self.bg=ImageTk.PhotoImage(file =r"D:\pythonpbo\walpaper.jpg")
+        self.bg=ImageTk.PhotoImage(file ="C:\Pemrograman-Berbasis-Objek-Kelompok-2024\pythonpbo\walpaper.jpg")
         bg_lbl=Label(self.root, image=self.bg)
         bg_lbl.place(x=0,y=0,relwidth=1,relheight=1)
 
 
         #==============left image==========
-        self.bg=ImageTk.PhotoImage(file =r"D:\\pythonpbo\\walpaper.jpg")
+        self.bg=ImageTk.PhotoImage(file ="D:\Pemrograman-Berbasis-Objek-Kelompok-2024\pythonpbo\walpaper.jpg")
         left_bg_lbl=Label(self.root, image=self.bg)
         left_bg_lbl.place(x=50,y=100,width=470,height=550)
 
@@ -96,13 +96,13 @@ class Register:
         checkbtn.place(x=50, y=400)
 
         #========buttons=======================
-        img = Image.open("C:\Users\LENOVO\Downloads\—Pngtree—register button_8616330.png") 
+        img = Image.open("C:\Pemrograman-Berbasis-Objek-Kelompok-2024\pythonpbo\—Pngtree—register button_8616330.png") 
         img = img.resize((300, 50), Image.Resampling.LANCZOS)
         self.photoimg = ImageTk.PhotoImage(img)
         b1 = Button(frame, image=self.photoimg, borderwidth=0, cursor="hand2", font=("poppins", 15, "bold"))
         b1.place(x=10, y=420, width=200)
 
-        img1 = Image.open("C:\\Users\\LENOVO\\Downloads\\login-button_592324-17754.png")
+        img1 = Image.open("C:\Pemrograman-Berbasis-Objek-Kelompok-2024\pythonpbo\login-button_592324-17754.png")
         img1 = img1.resize((200, 50), Image.Resampling.LANCZOS)
         self.photoimg1 = ImageTk.PhotoImage(img1)
         b1 = Button(frame, image=self.photoimg1, borderwidth=0, cursor="hand2", font=("poppins", 15, "bold"))
