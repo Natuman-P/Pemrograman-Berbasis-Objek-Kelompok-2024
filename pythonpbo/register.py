@@ -106,47 +106,54 @@ class Register:
         checkbtn.place(x=50, y=400)
 
         #========buttons=======================
-        img = Image.open(r"C:\Users\Pongo\Pemrograman-Berbasis-Objek-Kelompok-2024\—Pngtree—register button_8616330.png") 
-        img = img.resize((300, 50), Image.Resampling.LANCZOS)
-        self.photoimg = ImageTk.PhotoImage(img)
-        b1 = Button(frame, image=self.photoimg, command=self.register_data, borderwidth=0, cursor="hand2", font=("poppins", 15, "bold"))
-        b1.place(x=10, y=420, width=200)
+        register_btn = Button(frame, text="Register", command=self.register_data, font=("poppins", 15, "bold"), bg="green", fg="white")
+        register_btn.place(x=10, y=450, width=200)
 
-        img1 = Image.open(r"C:\Users\Pongo\Pemrograman-Berbasis-Objek-Kelompok-2024\pythonpbo\login-button_592324-17754.png")
-        img1 = img1.resize((200, 50), Image.Resampling.LANCZOS)
-        self.photoimg1 = ImageTk.PhotoImage(img1)
-        b1 = Button(frame, image=self.photoimg1, borderwidth=0, cursor="hand2", font=("poppins", 15, "bold"))
-        b1.place(x=370, y=420, width=200)
+        login_btn = Button(frame, text="Login", font=("poppins", 15, "bold"), bg="blue", fg="white")
+        login_btn.place(x=370, y=450, width=200)
 
     def register_data(self):
-        if self.var_fname.get()==""or self.var_email.get()=="" or self.var_securityQ =="Select":
-            messagebox.showerror("Error","All fields are required")
-        elif self.var_pass.get()!=self.var_confpass.get():
+        if self.var_fname.get() == "" or self.var_email.get() == "" or self.var_securityQ.get() == "Select":
+            messagebox.showerror("Error", "All fields are required")
+        elif self.var_pass.get() != self.var_confpass.get():
             messagebox.showerror("Error", "Password & confirm password must be same")
-        elif self.var_check.get()==0:
-            messagebox.showerror("Error", "please agree our terms and condition")
+        elif self.var_check.get() == 0:
+            messagebox.showerror("Error", "Please agree to our terms and conditions")
         else:
-            conn=mysql.connector.connect(host="localhost", user="root", password="", database="hospital")
-            my_cursor=conn.cursor()
-            query=("select * from register where email=%s")
-            value=(self.var_email.get())
-            my_cursor.execute(query, value)
-            row=my_cursor.fetchone()
-            if  row != None:
-                 messagebox.showerror("Error", "User already exist, please try another email")
-            else:
-                 my_cursor.execute("insert into register values(%s, %s, %s, %s, %s, %s, %s)", (
-                                                                                                self.var_fname.get(),
-                                                                                                self.var_lname.get(),
-                                                                                                self.var_contact.get(),
-                                                                                                self.var_email.get(),
-                                                                                                self.var_securityQ.get(),
-                                                                                                self.var_securityA.get(),
-                                                                                                self.var_pass.get()
-                 ))
-            conn.commit()
-            conn.close()
-            messagebox.showinfo("Sucess", "Register Success")
+            try:
+                # Connect to the MySQL database
+                conn = mysql.connector.connect(host="localhost", user="root", password="", database="userdata")
+                my_cursor = conn.cursor()
+
+                # Check if the email already exists in the database
+                query = "SELECT * FROM register WHERE email=%s"
+                value = (self.var_email.get(),)  # Corrected to be a tuple
+                my_cursor.execute(query, value)
+                row = my_cursor.fetchone()
+
+                if row is not None:
+                    messagebox.showerror("Error", "User already exists, please try another email")
+                else:
+                    # Insert the new user's data into the register table
+                    my_cursor.execute(
+                        "INSERT INTO register (fname, lname, contact, email, securityQ, securityA, password) VALUES (%s, %s, %s, %s, %s, %s, %s)",
+                        (
+                            self.var_fname.get(),
+                            self.var_lname.get(),
+                            self.var_contact.get(),
+                            self.var_email.get(),
+                            self.var_securityQ.get(),
+                            self.var_securityA.get(),
+                            self.var_pass.get()
+                        )
+                    )
+                    conn.commit()
+                    messagebox.showinfo("Success", "Register Success")
+                    
+                conn.close()
+            except Exception as es:
+                messagebox.showerror("Error", f"Error due to: {str(es)}")
+
 
 
 
