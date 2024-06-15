@@ -2,6 +2,7 @@ from tkinter import *
 from tkinter import ttk
 from PIL import Image, ImageTk
 from tkinter import messagebox
+import mysql.connector
 
 
 class Register:
@@ -10,7 +11,15 @@ class Register:
         self.root.title("Register")
         self.root.geometry("1600x900+0+0")
 
-
+        #=================VARIABLE=======
+        self.var_fname=StringVar()
+        self.var_lname=StringVar()
+        self.var_contact=StringVar()
+        self.var_email=StringVar()
+        self.var_securityQ=StringVar()
+        self.var_securityA=StringVar()
+        self.var_pass=StringVar()
+        self.var_confpass=StringVar()
 
         #==============bg image==========
         self.bg=ImageTk.PhotoImage(file =r"C:\Users\Pongo\Pemrograman-Berbasis-Objek-Kelompok-2024\pythonpbo\walpaper.jpg")
@@ -36,34 +45,34 @@ class Register:
         fname=Label(frame, text="First Name", font=("poppins", 15, "bold"), bg="white", fg="gray")
         fname.place(x=50, y=100)
 
-        fname_entry=ttk.Entry(frame, font=("poppins", 15,))
+        fname_entry=ttk.Entry(frame, textvariable=self.var_fname, font=("poppins", 15,))
         fname_entry.place(x=50,y=130,width=250)
 
         lname=Label(frame, text="Last Name", font=("poppins", 15, "bold"), bg="white", fg="gray" )
         lname.place(x=370, y=100)
 
-        self.txt_lname=ttk.Entry(frame,font=("poppins", 15))
+        self.txt_lname=ttk.Entry(frame, textvariable=self.var_lname, font=("poppins", 15))
         self.txt_lname.place(x=370, y=130, width=250)
 
         #======baris kedua
         contact=Label(frame,text="Contact", font=("poppins", 15, "bold"), bg="white", fg="gray")
         contact.place(x=50, y=170)
 
-        self.txt_contact=ttk.Entry(frame,font=("poppins", 15))
+        self.txt_contact=ttk.Entry(frame, textvariable=self.var_contact, font=("poppins", 15))
         self.txt_contact.place(x=50, y=200, width=250)
 
         email=Label(frame,text="Email", font=("poppins", 15, "bold"), bg="white", fg="gray")
         email.place(x=370, y=170)
 
-        self.txt_contact=ttk.Entry(frame,font=("poppins", 15))
-        self.txt_contact.place(x=370, y=200, width=250)
+        self.txt_email=ttk.Entry(frame, textvariable=self.var_email, font=("poppins", 15))
+        self.txt_email.place(x=370, y=200, width=250)
 
         #========baris ketiga
         security_Q=Label(frame,text="Select Security Questions", font=("poppins",15,"bold"), bg="white", fg="gray")
         security_Q.place(x=50,y=240)
 
 
-        self.combo_security_Q=ttk.Combobox(frame, font=("poppins",15,"bold"), state="readonly")
+        self.combo_security_Q=ttk.Combobox(frame, textvariable=self.var_securityQ, font=("poppins",15,"bold"), state="readonly")
         self.combo_security_Q["values"]=("Your Crush", "Your Birth Place", "Your Bestfriend", "Your School Name")
         self.combo_security_Q.place(x=50, y=270, width=250)
         self.combo_security_Q.current(0)
@@ -73,7 +82,7 @@ class Register:
         security_A=Label(frame,text="Security Answer", font=("poppins",15,"bold"), bg="white", fg="gray")
         security_A.place(x=370,y=240)
 
-        self.txt_security=ttk.Entry(frame,font=("poppins", 15))
+        self.txt_security=ttk.Entry(frame, textvariable=self.var_securityA, font=("poppins", 15))
         self.txt_security.place(x=370, y=270, width=250)
 
 
@@ -81,25 +90,26 @@ class Register:
         psswd=Label(frame,text="Password", font=("poppins",15,"bold"), bg="white", fg="gray")
         psswd.place(x=50, y=310)
 
-        self.txt_psswd=ttk.Entry(frame,font=("poppins", 15))
+        self.txt_psswd=ttk.Entry(frame, textvariable=self.var_pass, font=("poppins", 15))
         self.txt_psswd.place(x=50, y=340, width=250)
 
         cnfrmPsswd=Label(frame,text="Confirm Password", font=("poppins",15,"bold"), bg="white", fg="gray")
         cnfrmPsswd.place(x=370, y=310)
 
-        self.txt_cnfrmpsswd=ttk.Entry(frame,font=("poppins", 15))
+        self.txt_cnfrmpsswd=ttk.Entry(frame, textvariable=self.var_confpass, font=("poppins", 15))
         self.txt_cnfrmpsswd.place(x=370, y=340, width=250)
 
 
         #=========================check button==============================
-        checkbtn=Checkbutton(frame,text="I Agree The Terms & Conditions", font=("poppins",15,"bold"), bg="white", fg="black", onvalue=1,offvalue =0)
+        self.var_check=IntVar()
+        checkbtn=Checkbutton(frame, variable=self.var_check, text="I Agree The Terms & Conditions", font=("poppins",15,"bold"), bg="white", fg="black", onvalue=1,offvalue =0)
         checkbtn.place(x=50, y=400)
 
         #========buttons=======================
         img = Image.open(r"C:\Users\Pongo\Pemrograman-Berbasis-Objek-Kelompok-2024\—Pngtree—register button_8616330.png") 
         img = img.resize((300, 50), Image.Resampling.LANCZOS)
         self.photoimg = ImageTk.PhotoImage(img)
-        b1 = Button(frame, image=self.photoimg, borderwidth=0, cursor="hand2", font=("poppins", 15, "bold"))
+        b1 = Button(frame, image=self.photoimg, command=self.register_data, borderwidth=0, cursor="hand2", font=("poppins", 15, "bold"))
         b1.place(x=10, y=420, width=200)
 
         img1 = Image.open(r"C:\Users\Pongo\Pemrograman-Berbasis-Objek-Kelompok-2024\pythonpbo\login-button_592324-17754.png")
@@ -107,6 +117,42 @@ class Register:
         self.photoimg1 = ImageTk.PhotoImage(img1)
         b1 = Button(frame, image=self.photoimg1, borderwidth=0, cursor="hand2", font=("poppins", 15, "bold"))
         b1.place(x=370, y=420, width=200)
+
+    def register_data(self):
+        if self.var_fname.get()==""or self.var_email.get()=="" or self.var_securityQ =="Select":
+            messagebox.showerror("Error","All fields are required")
+        elif self.var_pass.get()!=self.var_confpass.get():
+            messagebox.showerror("Error", "Password & confirm password must be same")
+        elif self.var_check.get()==0:
+            messagebox.showerror("Error", "please agree our terms and condition")
+        else:
+            conn=mysql.connector.connect(host="localhost", user="root", password="", database="hospital")
+            my_cursor=conn.cursor()
+            query=("select * from register where email=%s")
+            value=(self.var_email.get())
+            my_cursor.execute(query, value)
+            row=my_cursor.fetchone()
+            if  row != None:
+                 messagebox.showerror("Error", "User already exist, please try another email")
+            else:
+                 my_cursor.execute("insert into register values(%s, %s, %s, %s, %s, %s, %s)", (
+                                                                                                self.var_fname.get(),
+                                                                                                self.var_lname.get(),
+                                                                                                self.var_contact.get(),
+                                                                                                self.var_email.get(),
+                                                                                                self.var_securityQ.get(),
+                                                                                                self.var_securityA.get(),
+                                                                                                self.var_pass.get()
+                 ))
+            conn.commit()
+            conn.close()
+            messagebox.showinfo("Sucess", "Register Success")
+
+
+
+
+
+
 
 
 if __name__=="__main__":  
