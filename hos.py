@@ -44,7 +44,7 @@ class hospital:
         DataFrameLeft.place(x=0,y=5,width=980,height=350)
 
         DataFrameRight=LabelFrame(DataFrame,bd=10,padx=20,relief=RIDGE,
-                                    font=("arial",12"bold"),text="Prescription")
+                                    font=("arial",12,"bold"),text="Prescription")
         DataFrameRight.place(x=990,y=5,width=460,height=350)
 
         # ======ButtonFrame===================================
