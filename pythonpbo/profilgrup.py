@@ -4,11 +4,11 @@ from PIL import Image, ImageTk, ImageOps, ImageDraw
 
 # Daftar anggota (nama, nomor identitas, dan path foto)
 anggota = [
-    {"nama": "Rio Andrew Permadi", "NPM": "2215061044", "foto": "D:/Pempython/fotoprofil1.png"},
-    {"nama": "Iqbal Al Himni", "NPM": "2215061068", "foto": "D:/Pempython/fotoprofil1.png"},
-    {"nama": "M. Luthfi Alfaridzi", "NPM": "2215061072", "foto": "D:/Pempython/fotoprofil1.png"},
-    {"nama": "Andes Potipera Sitepu", "NPM": "2215061080", "foto": "D:/Pempython/fotoprofil1.png"},
-    {"nama": "M. Dai Hakiki", "NPM": "2265061001", "foto": "D:/Pempython/fotoprofil1.png"}
+    {"nama": "Rio Andrew Permadi", "NPM": "2215061044", "foto": r"C:\Users\Pongo\Pemrograman-Berbasis-Objek-Kelompok-2024\pythonpbo\fotoprofil1.png"},
+    {"nama": "Iqbal Al Himni", "NPM": "2215061068", "foto": r"C:\Users\Pongo\Pemrograman-Berbasis-Objek-Kelompok-2024\pythonpbo\fotoprofil1.png"},
+    {"nama": "M. Luthfi Alfaridzi", "NPM": "2215061072", "foto": r"C:\Users\Pongo\Pemrograman-Berbasis-Objek-Kelompok-2024\pythonpbo\fotoprofil1.png"},
+    {"nama": "Andes Potipera Sitepu", "NPM": "2215061080", "foto": r"C:\Users\Pongo\Pemrograman-Berbasis-Objek-Kelompok-2024\pythonpbo\fotoprofil1.png"},
+    {"nama": "M. Dai Hakiki", "NPM": "2265061001", "foto": r"C:\Users\Pongo\Pemrograman-Berbasis-Objek-Kelompok-2024\pythonpbo\fotoprofil1.png"}
 ]
 
 class LandingPage(tk.Tk):

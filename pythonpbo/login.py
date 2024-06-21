@@ -58,7 +58,7 @@ class Login_Window:
         lblimg3.place(x=10, y=280, width=25, height=25)
 
         # Login button
-        loginbtn = Button(frame, command=self.login, text="Login", font=("times new roman", 15, "bold"), bd=3, relief=RIDGE, fg="white", bg="red", activeforeground="white", activebackground="red")
+        loginbtn = Button(frame, command=self.open_pagegrup_window, text="Login", font=("times new roman", 15, "bold"), bd=3, relief=RIDGE, fg="white", bg="red", activeforeground="white", activebackground="red")
         loginbtn.place(x=40, y=340, width=120, height=35)
 
         # Register button
@@ -94,6 +94,13 @@ class Login_Window:
     def open_register_window(self):
         try:
             register_path = os.path.join(r"C:\Users\Pongo\Pemrograman-Berbasis-Objek-Kelompok-2024\pythonpbo", "register.py")
+            subprocess.Popen(["python", register_path])
+        except Exception as e:
+            messagebox.showerror("Error", f"Failed to open register window: {e}")
+
+    def open_pagegrup_window(self):
+        try:
+            register_path = os.path.join(r"C:\Users\Pongo\Pemrograman-Berbasis-Objek-Kelompok-2024\pythonpbo", "profilgrup.py")
             subprocess.Popen(["python", register_path])
         except Exception as e:
             messagebox.showerror("Error", f"Failed to open register window: {e}")
