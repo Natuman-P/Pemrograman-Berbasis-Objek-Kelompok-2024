@@ -12,7 +12,7 @@ class Login_Window:
         self.root.geometry("1550x800+0+0")
 
         # Background image
-        self.bg = ImageTk.PhotoImage(file=r"C:\Users\Pongo\Downloads\18773520_6025383.jpg")
+        self.bg = ImageTk.PhotoImage(file=r"C:\Users\Pongo\Pemrograman-Berbasis-Objek-Kelompok-2024\pythonpbo\walpaper4.png")
         lbl_bg = Label(self.root, image=self.bg)
         lbl_bg.place(x=0, y=0, relwidth=1, relheight=1)
 
