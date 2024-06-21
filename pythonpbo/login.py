@@ -62,11 +62,11 @@ class Login_Window:
         loginbtn.place(x=40, y=340, width=120, height=35)
 
         # Register button
-        registerbtn = Button(frame, command=self.open_register_window, text="New User Register", font=("times new roman", 15, "bold"), bd=3, relief=RIDGE, fg="white", bg="red", activeforeground="white", activebackground="red")
+        registerbtn = Button(frame, command=self.open_register_window, text="Register Now", font=("times new roman", 15, "bold"), bd=3, relief=RIDGE, fg="white", bg="red", activeforeground="white", activebackground="red")
         registerbtn.place(x=190, y=340, width=120, height=35)
 
         # Forget password button
-        forgetbtn = Button(frame, text="Forget Password", font=("times new roman", 15, "bold"), bd=3, relief=RIDGE, fg="white", bg="red", activeforeground="white", activebackground="red")
+        forgetbtn = Button(frame, command=self.open_forget_password_window, text="Forget Password", font=("times new roman", 15, "bold"), bd=3, relief=RIDGE, fg="white", bg="red", activeforeground="white", activebackground="red")
         forgetbtn.place(x=110, y=390, width=160)
 
     def login(self):
@@ -93,13 +93,84 @@ class Login_Window:
 
     def open_register_window(self):
         try:
-            # Pastikan path ke register.py sesuai dengan struktur Anda
             register_path = os.path.join(r"C:\Users\Pongo\Pemrograman-Berbasis-Objek-Kelompok-2024\pythonpbo", "register.py")
-
-            # Menjalankan register.py menggunakan subprocess.Popen
             subprocess.Popen(["python", register_path])
         except Exception as e:
             messagebox.showerror("Error", f"Failed to open register window: {e}")
+
+    def open_forget_password_window(self):
+        self.new_window = Toplevel(self.root)
+        self.app = ForgetPassword_Window(self.new_window)
+
+class ForgetPassword_Window:
+    def __init__(self, root):
+        self.root = root
+        self.root.title("Forget Password")
+        self.root.geometry("400x550+500+150")
+
+        title = Label(self.root, text="Forget Password", font=("times new roman", 20, "bold"), fg="red")
+        title.place(x=0, y=10, relwidth=1)
+
+        email_label = Label(self.root, text="Email", font=("times new roman", 15, "bold"), fg="black")
+        email_label.place(x=50, y=80)
+        self.email_entry = ttk.Entry(self.root, font=("times new roman", 15, "bold"))
+        self.email_entry.place(x=50, y=110, width=300)
+
+        security_q_label = Label(self.root, text="Select Security Question", font=("times new roman", 15, "bold"), fg="black")
+        security_q_label.place(x=50, y=160)
+        self.security_q_combo = ttk.Combobox(self.root, font=("times new roman", 15, "bold"), state="readonly")
+        self.security_q_combo["values"] = ("Your Crush", "Your Birth Place", "Your Bestfriend", "Your School Name")
+        self.security_q_combo.place(x=50, y=190, width=300)
+        self.security_q_combo.current(0)
+
+        security_a_label = Label(self.root, text="Security Answer", font=("times new roman", 15, "bold"), fg="black")
+        security_a_label.place(x=50, y=240)
+        self.security_a_entry = ttk.Entry(self.root, font=("times new roman", 15, "bold"))
+        self.security_a_entry.place(x=50, y=270, width=300)
+
+        new_pass_label = Label(self.root, text="New Password", font=("times new roman", 15, "bold"), fg="black")
+        new_pass_label.place(x=50, y=320)
+        self.new_pass_entry = ttk.Entry(self.root, font=("times new roman", 15, "bold"), show='*')
+        self.new_pass_entry.place(x=50, y=350, width=300)
+
+        confirm_pass_label = Label(self.root, text="Confirm Password", font=("times new roman", 15, "bold"), fg="black")
+        confirm_pass_label.place(x=50, y=390)
+        self.confirm_pass_entry = ttk.Entry(self.root, font=("times new roman", 15, "bold"), show='*')
+        self.confirm_pass_entry.place(x=50, y=420, width=300)
+
+        reset_btn = Button(self.root, text="Reset Password", command=self.reset_password, font=("times new roman", 15, "bold"), bd=3, relief=RIDGE, fg="white", bg="red", activeforeground="white", activebackground="red")
+        reset_btn.place(x=125, y=470, width=150)
+
+    def reset_password(self):
+        if self.email_entry.get() == "" or self.security_a_entry.get() == "" or self.new_pass_entry.get() == "" or self.confirm_pass_entry.get() == "":
+            messagebox.showerror("Error", "All fields are required")
+        elif self.new_pass_entry.get() != self.confirm_pass_entry.get():
+            messagebox.showerror("Error", "New Password and Confirm Password must match")
+        else:
+            try:
+                conn = mysql.connector.connect(
+                    host="localhost",
+                    user="your_mysql_username",
+                    password="your_mysql_password",
+                    database="userdata"
+                )
+                cursor = conn.cursor()
+                query = "SELECT * FROM users WHERE email=%s AND securityQ=%s AND securityA=%s"
+                value = (self.email_entry.get(), self.security_q_combo.get(), self.security_a_entry.get())
+                cursor.execute(query, value)
+                row = cursor.fetchone()
+                if row:
+                    query = "UPDATE users SET password=%s WHERE email=%s"
+                    value = (self.new_pass_entry.get(), self.email_entry.get())
+                    cursor.execute(query, value)
+                    conn.commit()
+                    messagebox.showinfo("Success", "Your password has been reset successfully")
+                    self.root.destroy()
+                else:
+                    messagebox.showerror("Error", "Incorrect security answer or email")
+                conn.close()
+            except mysql.connector.Error as err:
+                messagebox.showerror("Error", f"Error connecting to database: {err}")
 
 if __name__ == "__main__":
     root = Tk()
