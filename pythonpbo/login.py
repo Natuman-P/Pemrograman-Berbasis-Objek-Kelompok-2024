@@ -76,17 +76,17 @@ class Login_Window:
             try:
                 conn = mysql.connector.connect(
                     host="localhost",
-                    user="your_mysql_username",
-                    password="your_mysql_password",
+                    user="root",
+                    password="",
                     database="userdata"
                 )
                 cursor = conn.cursor()
-                cursor.execute("SELECT * FROM users WHERE email=%s AND password=%s", (self.txtuser.get(), self.txtpass.get()))
+                cursor.execute("SELECT * FROM register WHERE email=%s AND password=%s", (self.txtuser.get(), self.txtpass.get()))
                 row = cursor.fetchone()
                 if row:
                     messagebox.showinfo("Success", "Welcome to ")
                 else:
-                    messagebox.showerror("Invalid", "Invalid email & password")
+                    messagebox.showerror("Invalid", "Invalid email or password")
                 conn.close()
             except mysql.connector.Error as err:
                 messagebox.showerror("Error", f"Error connecting to database: {err}")
@@ -150,17 +150,17 @@ class ForgetPassword_Window:
             try:
                 conn = mysql.connector.connect(
                     host="localhost",
-                    user="your_mysql_username",
-                    password="your_mysql_password",
+                    user="root",
+                    password="",
                     database="userdata"
                 )
                 cursor = conn.cursor()
-                query = "SELECT * FROM users WHERE email=%s AND securityQ=%s AND securityA=%s"
+                query = "SELECT * FROM register WHERE email=%s AND securityQ=%s AND securityA=%s"
                 value = (self.email_entry.get(), self.security_q_combo.get(), self.security_a_entry.get())
                 cursor.execute(query, value)
                 row = cursor.fetchone()
                 if row:
-                    query = "UPDATE users SET password=%s WHERE email=%s"
+                    query = "UPDATE register SET password=%s WHERE email=%s"
                     value = (self.new_pass_entry.get(), self.email_entry.get())
                     cursor.execute(query, value)
                     conn.commit()
