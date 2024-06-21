@@ -45,7 +45,7 @@ class Login_Window:
         self.txtpass.place(x=40, y=280, width=270)
 
         # Icon images
-        img2 = Image.open(r"C:\Users\Pongo\Pemrograman-Berbasis-Objek-Kelompok-2024\pythonpbo\walpaper.jpg")
+        img2 = Image.open(r"C:\Users\Pongo\Pemrograman-Berbasis-Objek-Kelompok-2024\pythonpbo\email.png")
         img2 = img2.resize((25, 25), Image.LANCZOS)
         self.photoimage2 = ImageTk.PhotoImage(img2)
         lblimg2 = Label(frame, image=self.photoimage2, bg="black", borderwidth=0)
