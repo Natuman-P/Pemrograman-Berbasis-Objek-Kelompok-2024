@@ -1,6 +1,5 @@
 from tkinter import *
 from tkinter import ttk
-from PIL import Image, ImageTk
 from tkinter import messagebox
 import mysql.connector
 import os
@@ -21,16 +20,6 @@ class Register:
         self.var_securityA = StringVar()
         self.var_pass = StringVar()
         self.var_confpass = StringVar()
-
-        #==============bg image==========
-        self.bg = ImageTk.PhotoImage(file=r"C:\Users\Pongo\Pemrograman-Berbasis-Objek-Kelompok-2024\pythonpbo\walpaper.jpg")
-        bg_lbl = Label(self.root, image=self.bg)
-        bg_lbl.place(x=0, y=0, relwidth=1, relheight=1)
-
-        #==============left image==========
-        self.bg = ImageTk.PhotoImage(file=r"C:\Users\Pongo\Pemrograman-Berbasis-Objek-Kelompok-2024\pythonpbo\walpaper.jpg")
-        left_bg_lbl = Label(self.root, image=self.bg)
-        left_bg_lbl.place(x=50, y=100, width=470, height=550)
 
         #===========main Frame=============
         frame = Frame(self.root, bg="white")
@@ -151,7 +140,7 @@ class Register:
 
     def open_login_window(self):
         try:
-            login_path = os.path.join(r"C:\Users\Pongo\Pemrograman-Berbasis-Objek-Kelompok-2024\pythonpbo", "login.py")
+            login_path = os.path.join(r"login.py")
             subprocess.Popen(["python", login_path])
         except Exception as e:
             messagebox.showerror("Error", f"Failed to open login window: {e}")
