@@ -1,4 +1,3 @@
-
 from tkinter import*
 from tkinter import ttk
 import random
@@ -194,7 +193,7 @@ class hospital:
         self.hospital_table.heading("expdate", text="Exp Date")
         self.hospital_table.heading("dailydose", text="Daily Date")
         self.hospital_table.heading("storage", text="Storage")
-        self.hospital_table.heading("nosnumber" text="NHS Number") 
+        self.hospital_table.heading("nosnumber" text="NHS Number")
         self.hospital_table.heading("poame", text="Patient Name")
         self.hospital_table.heading("dow", text="DOB")
         self.hospital_table.heading("address", text="Address")
@@ -219,7 +218,7 @@ class hospital:
         self.hospital_table.bind("<ButtonRelease-1>", self.get_cursor)
         self.fatch_data()
 
-    def get_cursor(self, event="");
+    def get_cursor(self, event=""):
         cursor_row=self.hospital_table.focus()
         content=self.hospital_table.item(cursor_row)
         raw=content["values"]
@@ -240,7 +239,7 @@ class hospital:
 #=======================Punction Declaration==================
  
     def iPrescriptionData (self):
-        if self.Nameoftablets.get()=="" or self.ref.get()=="";
+        if self.Nameoftablets.get()=="" or self.ref.get()=="":
             messagebox.showerror("Error", "All fields are required")
         else:
             conn=mysql.connector.connect(host='localhost", username='root', password='Test@123', database='management')
