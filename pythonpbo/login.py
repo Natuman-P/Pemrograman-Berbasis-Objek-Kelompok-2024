@@ -51,7 +51,7 @@ class Login_Window:
         lblimg2 = Label(frame, image=self.photoimage2, bg="black", borderwidth=0)
         lblimg2.place(x=10, y=210, width=25, height=25)
 
-        img3 = Image.open(r"C:\Users\Pongo\Pemrograman-Berbasis-Objek-Kelompok-2024\pythonpbo\walpaper.jpg")
+        img3 = Image.open(r"C:\Users\Pongo\Pemrograman-Berbasis-Objek-Kelompok-2024\pythonpbo\gembok.png")
         img3 = img3.resize((25, 25), Image.LANCZOS)
         self.photoimage3 = ImageTk.PhotoImage(img3)
         lblimg3 = Label(frame, image=self.photoimage3, bg="black", borderwidth=0)
