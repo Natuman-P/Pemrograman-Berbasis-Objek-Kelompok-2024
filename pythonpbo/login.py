@@ -21,7 +21,7 @@ class Login_Window:
         frame.place(x=610, y=170, width=340, height=450)
 
         # User icon
-        img1 = Image.open(r"C:\Users\Pongo\Pemrograman-Berbasis-Objek-Kelompok-2024\pythonpbo\walpaper.jpg")
+        img1 = Image.open(r"C:\Users\Pongo\Pemrograman-Berbasis-Objek-Kelompok-2024\pythonpbo\user.png")
         img1 = img1.resize((100, 100), Image.LANCZOS)
         self.photoimage1 = ImageTk.PhotoImage(img1)
         lblimg1 = Label(frame, image=self.photoimage1, bg="black", borderwidth=0)
