@@ -4,11 +4,11 @@ from PIL import Image, ImageTk, ImageOps, ImageDraw
 
 # Daftar anggota (nama, nomor identitas, dan path foto)
 anggota = [
-    {"nama": "Rio Andrew Permadi", "NPM": "2215061044", "foto": r"C:\Users\user\Documents\File-file Kuliah\Tugas Semester 4 (File Jadi)\PBO\UAS PBO\boy.jpg"},
-    {"nama": "Iqbal Al Himni", "NPM": "2215061068", "foto": r"C:\Users\user\Documents\File-file Kuliah\Tugas Semester 4 (File Jadi)\PBO\UAS PBO\boy.jpg"},
-    {"nama": "M. Luthfi Alfaridzi", "NPM": "2215061072", "foto": r"C:\Users\user\Documents\File-file Kuliah\Tugas Semester 4 (File Jadi)\PBO\UAS PBO\boy.jpg"},
-    {"nama": "Andes Potipera Sitepu", "NPM": "2215061080", "foto": r"C:\Users\user\Documents\File-file Kuliah\Tugas Semester 4 (File Jadi)\PBO\UAS PBO\boy.jpg"},
-    {"nama": "M. Dai Hakiki", "NPM": "2265061001", "foto": r"C:\Users\user\Documents\File-file Kuliah\Tugas Semester 4 (File Jadi)\PBO\UAS PBO\boy.jpg"}
+    {"nama": "Rio Andrew Permadi", "NPM": "2215061044", "foto": r"C:\Users\Pongo\Downloads\fotorio.jpg"},
+    {"nama": "Iqbal Al Himni", "NPM": "2215061068", "foto": r"C:\Users\Pongo\Downloads\fotoikbal.jpg"},
+    {"nama": "M. Luthfi Alfaridzi", "NPM": "2215061072", "foto": r"C:\Users\Pongo\Downloads\fotolutfi.jpg"},
+    {"nama": "Andes Potipera Sitepu", "NPM": "2215061080", "foto": r"C:\Users\Pongo\Downloads\fotoandes.jpg"},
+    {"nama": "M. Dai Hakiki", "NPM": "2265061001", "foto": r"C:\Users\Pongo\Downloads\fotoiki.jpg"}
 ]
 
 class LandingPage(tk.Tk):
