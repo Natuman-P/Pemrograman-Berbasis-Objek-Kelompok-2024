@@ -4,17 +4,17 @@ from PIL import Image, ImageTk, ImageOps, ImageDraw
 
 # Daftar anggota (nama, nomor identitas, dan path foto)
 anggota = [
-    {"nama": "Rio Andrew Permadi", "NPM": "2215061044", "foto": r"C:\Users\Pongo\Pemrograman-Berbasis-Objek-Kelompok-2024\pythonpbo\fotoprofil1.png"},
-    {"nama": "Iqbal Al Himni", "NPM": "2215061068", "foto": r"C:\Users\Pongo\Pemrograman-Berbasis-Objek-Kelompok-2024\pythonpbo\fotoprofil1.png"},
-    {"nama": "M. Luthfi Alfaridzi", "NPM": "2215061072", "foto": r"C:\Users\Pongo\Pemrograman-Berbasis-Objek-Kelompok-2024\pythonpbo\fotoprofil1.png"},
-    {"nama": "Andes Potipera Sitepu", "NPM": "2215061080", "foto": r"C:\Users\Pongo\Pemrograman-Berbasis-Objek-Kelompok-2024\pythonpbo\fotoprofil1.png"},
-    {"nama": "M. Dai Hakiki", "NPM": "2265061001", "foto": r"C:\Users\Pongo\Pemrograman-Berbasis-Objek-Kelompok-2024\pythonpbo\fotoprofil1.png"}
+    {"nama": "Rio Andrew Permadi", "NPM": "2215061044", "foto": r"C:\Users\user\Documents\File-file Kuliah\Tugas Semester 4 (File Jadi)\PBO\UAS PBO\boy.jpg"},
+    {"nama": "Iqbal Al Himni", "NPM": "2215061068", "foto": r"C:\Users\user\Documents\File-file Kuliah\Tugas Semester 4 (File Jadi)\PBO\UAS PBO\boy.jpg"},
+    {"nama": "M. Luthfi Alfaridzi", "NPM": "2215061072", "foto": r"C:\Users\user\Documents\File-file Kuliah\Tugas Semester 4 (File Jadi)\PBO\UAS PBO\boy.jpg"},
+    {"nama": "Andes Potipera Sitepu", "NPM": "2215061080", "foto": r"C:\Users\user\Documents\File-file Kuliah\Tugas Semester 4 (File Jadi)\PBO\UAS PBO\boy.jpg"},
+    {"nama": "M. Dai Hakiki", "NPM": "2265061001", "foto": r"C:\Users\user\Documents\File-file Kuliah\Tugas Semester 4 (File Jadi)\PBO\UAS PBO\boy.jpg"}
 ]
 
 class LandingPage(tk.Tk):
     def __init__(self):
         super().__init__()
-        self.title("Kel 7 PBO")
+        self.title("Kelompok 7 Pemrograman Berorientasi Objek")
         self.geometry("800x600")
         self.configure(bg="#f0f0f0")
         
