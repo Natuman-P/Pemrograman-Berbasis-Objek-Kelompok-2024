@@ -1,155 +1,203 @@
-from tkinter import *
-from tkinter import ttk
-from PIL import Image, ImageTk
-from tkinter import messagebox
-import mysql.connector
 import os
 import subprocess
+from tkinter import *
+from tkinter import ttk, messagebox
+from PIL import Image, ImageTk
+import mysql.connector
 
-class Register:
+class Login_Window:
     def __init__(self, root):
         self.root = root
-        self.root.title("Register")
-        self.root.geometry("1600x900+0+0")
+        self.root.title("Login")
+        # Mendapatkan lebar dan tinggi layar
+        screen_width = self.root.winfo_screenwidth()
+        screen_height = self.root.winfo_screenheight()
 
-        #=================VARIABLE=======
-        self.var_fname = StringVar()
-        self.var_lname = StringVar()
-        self.var_contact = StringVar()
-        self.var_email = StringVar()
-        self.var_securityQ = StringVar()
-        self.var_securityA = StringVar()
-        self.var_pass = StringVar()
-        self.var_confpass = StringVar()
+        # Menghitung posisi x dan y untuk menengahkan window
+        x_position = int((screen_width/2) - (1550/2))  # Lebar window = 1550
+        y_position = int((screen_height/2) - (800/2))  # Tinggi window = 800
 
+        # Set geometry dengan posisi yang telah dihitung
+        self.root.geometry(f"1550x800+{x_position}+{y_position}")
 
+        # Background image
+        self.bg = ImageTk.PhotoImage(file=r"D:\PBOfix\walpaper4.png")
+        lbl_bg = Label(self.root, image=self.bg)
+        lbl_bg.place(x=0, y=0, relwidth=1, relheight=1)
 
-        #===========main Frame=============
-        frame = Frame(self.root, bg="white")
-        frame.place(x=520, y=100, width=800, height=550)
+        # Frame for login
+        frame = Frame(self.root, bg="black")
+        frame.place(x=500, y=100, width=340, height=450)
 
-        register_lbl = Label(frame, text="REGISTER HERE", font=("poppins", 25, "bold"), fg="darkgray", bg="white")
-        register_lbl.place(x=20, y=20)
+        # User icon
+        img1 = Image.open(r"D:\PBOfix\user.png")
+        img1 = img1.resize((100, 100), Image.LANCZOS)
+        self.photoimage1 = ImageTk.PhotoImage(img1)
+        lblimg1 = Label(frame, image=self.photoimage1, bg="black", borderwidth=0)
+        lblimg1.place(x=120, y=20, width=100, height=100)
 
-        #============label and entry=============
-        
-        #=====baris pertama
-        fname = Label(frame, text="First Name", font=("poppins", 15, "bold"), bg="white", fg="gray")
-        fname.place(x=50, y=100)
+        get_str = Label(frame, text="Get Started", font=("times new roman", 20, "bold"), fg="white", bg="black")
+        get_str.place(x=95, y=140)
 
-        fname_entry = ttk.Entry(frame, textvariable=self.var_fname, font=("poppins", 15))
-        fname_entry.place(x=50, y=130, width=250)
+        # Label for email
+        email_lbl = Label(frame, text="Email", font=("times new roman", 15, "bold"), fg="white", bg="black")
+        email_lbl.place(x=40, y=185)
 
-        lname = Label(frame, text="Last Name", font=("poppins", 15, "bold"), bg="white", fg="gray")
-        lname.place(x=370, y=100)
+        self.txtuser = ttk.Entry(frame, font=("times new roman", 15, "bold"))
+        self.txtuser.place(x=40, y=210, width=270)
 
-        self.txt_lname = ttk.Entry(frame, textvariable=self.var_lname, font=("poppins", 15))
-        self.txt_lname.place(x=370, y=130, width=250)
+        # Label for password
+        password_lbl = Label(frame, text="Password", font=("times new roman", 15, "bold"), fg="white", bg="black")
+        password_lbl.place(x=40, y=255)
 
-        #======baris kedua
-        contact = Label(frame, text="Contact", font=("poppins", 15, "bold"), bg="white", fg="gray")
-        contact.place(x=50, y=170)
+        self.txtpass = ttk.Entry(frame, font=("times new roman", 15, "bold"), show='*')
+        self.txtpass.place(x=40, y=280, width=270)
 
-        self.txt_contact = ttk.Entry(frame, textvariable=self.var_contact, font=("poppins", 15))
-        self.txt_contact.place(x=50, y=200, width=250)
+        # Icon images
+        img2 = Image.open(r"D:\PBOfix\email.png")
+        img2 = img2.resize((25, 25), Image.LANCZOS)
+        self.photoimage2 = ImageTk.PhotoImage(img2)
+        lblimg2 = Label(frame, image=self.photoimage2, bg="black", borderwidth=0)
+        lblimg2.place(x=10, y=210, width=25, height=25)
 
-        email = Label(frame, text="Email", font=("poppins", 15, "bold"), bg="white", fg="gray")
-        email.place(x=370, y=170)
+        img3 = Image.open(r"D:\PBOfix\gembok.png")
+        img3 = img3.resize((25, 25), Image.LANCZOS)
+        self.photoimage3 = ImageTk.PhotoImage(img3)
+        lblimg3 = Label(frame, image=self.photoimage3, bg="black", borderwidth=0)
+        lblimg3.place(x=10, y=280, width=25, height=25)
 
-        self.txt_email = ttk.Entry(frame, textvariable=self.var_email, font=("poppins", 15))
-        self.txt_email.place(x=370, y=200, width=250)
+        # Login button
+        loginbtn = Button(frame, command=self.login, text="Login", font=("times new roman", 15, "bold"), bd=3, relief=RIDGE, fg="white", bg="red", activeforeground="white", activebackground="red")
+        loginbtn.place(x=40, y=340, width=120, height=35)
 
-        #========baris ketiga
-        security_Q = Label(frame, text="Select Security Questions", font=("poppins", 15, "bold"), bg="white", fg="gray")
-        security_Q.place(x=50, y=240)
+        # Register button
+        registerbtn = Button(frame, command=self.open_register_window, text="Register Now", font=("times new roman", 15, "bold"), bd=3, relief=RIDGE, fg="white", bg="red", activeforeground="white", activebackground="red")
+        registerbtn.place(x=190, y=340, width=120, height=35)
 
-        self.combo_security_Q = ttk.Combobox(frame, textvariable=self.var_securityQ, font=("poppins", 15, "bold"), state="readonly")
-        self.combo_security_Q["values"] = ("Your Crush", "Your Birth Place", "Your Bestfriend", "Your School Name")
-        self.combo_security_Q.place(x=50, y=270, width=250)
-        self.combo_security_Q.current(0)
+        # Forget password button
+        forgetbtn = Button(frame, command=self.open_forget_password_window, text="Forget Password", font=("times new roman", 15, "bold"), bd=3, relief=RIDGE, fg="white", bg="red", activeforeground="white", activebackground="red")
+        forgetbtn.place(x=110, y=390, width=160)
 
-        security_A = Label(frame, text="Security Answer", font=("poppins", 15, "bold"), bg="white", fg="gray")
-        security_A.place(x=370, y=240)
-
-        self.txt_security = ttk.Entry(frame, textvariable=self.var_securityA, font=("poppins", 15))
-        self.txt_security.place(x=370, y=270, width=250)
-
-        #=======baris keempat
-        psswd = Label(frame, text="Password", font=("poppins", 15, "bold"), bg="white", fg="gray")
-        psswd.place(x=50, y=310)
-
-        self.txt_psswd = ttk.Entry(frame, textvariable=self.var_pass, font=("poppins", 15), show='*')
-        self.txt_psswd.place(x=50, y=340, width=250)
-
-        cnfrmPsswd = Label(frame, text="Confirm Password", font=("poppins", 15, "bold"), bg="white", fg="gray")
-        cnfrmPsswd.place(x=370, y=310)
-
-        self.txt_cnfrmpsswd = ttk.Entry(frame, textvariable=self.var_confpass, font=("poppins", 15), show='*')
-        self.txt_cnfrmpsswd.place(x=370, y=340, width=250)
-
-        #=========================check button==============================
-        self.var_check = IntVar()
-        checkbtn = Checkbutton(frame, variable=self.var_check, text="I Agree The Terms & Conditions", font=("poppins", 15, "bold"), bg="white", fg="black", onvalue=1, offvalue=0)
-        checkbtn.place(x=50, y=400)
-
-        #========buttons=======================
-        register_btn = Button(frame, text="Register", command=self.register_data, font=("poppins", 15, "bold"), bg="green", fg="white")
-        register_btn.place(x=10, y=450, width=200)
-
-        login_btn = Button(frame, text="Login", command=self.open_login_window, font=("poppins", 15, "bold"), bg="blue", fg="white")
-        login_btn.place(x=370, y=450, width=200)
-
-    def register_data(self):
-        if self.var_fname.get() == "" or self.var_email.get() == "" or self.var_securityQ.get() == "Select":
+    def login(self):
+        if self.txtuser.get() == "" or self.txtpass.get() == "":
             messagebox.showerror("Error", "All fields are required")
-        elif self.var_pass.get() != self.var_confpass.get():
-            messagebox.showerror("Error", "Password & confirm password must be same")
-        elif self.var_check.get() == 0:
-            messagebox.showerror("Error", "Please agree to our terms and conditions")
         else:
             try:
-                # Connect to the MySQL database
-                conn = mysql.connector.connect(host="localhost", user="root", password="", database="userdata")
-                my_cursor = conn.cursor()
-
-                # Check if the email already exists in the database
-                query = "SELECT * FROM register WHERE email=%s"
-                value = (self.var_email.get(),)  # Corrected to be a tuple
-                my_cursor.execute(query, value)
-                row = my_cursor.fetchone()
-
-                if row is not None:
-                    messagebox.showerror("Error", "User already exists, please try another email")
+                conn = mysql.connector.connect(
+                    host="localhost",
+                    user="root",
+                    password="",
+                    database="userdata"
+                )
+                cursor = conn.cursor()
+                cursor.execute("SELECT password FROM register WHERE email=%s", (self.txtuser.get(),))
+                row = cursor.fetchone()
+                if row and row[0] == self.txtpass.get():
+                    self.open_pagegrup_window()
                 else:
-                    # Insert the new user's data into the register table
-                    my_cursor.execute(
-                        "INSERT INTO register (fname, lname, contact, email, securityQ, securityA, password) VALUES (%s, %s, %s, %s, %s, %s, %s)",
-                        (
-                            self.var_fname.get(),
-                            self.var_lname.get(),
-                            self.var_contact.get(),
-                            self.var_email.get(),
-                            self.var_securityQ.get(),
-                            self.var_securityA.get(),
-                            self.var_pass.get()
-                        )
-                    )
-                    conn.commit()
-                    messagebox.showinfo("Success", "Register Success")
-                    
+                    messagebox.showerror("Invalid", "Invalid email or password")
                 conn.close()
-            except Exception as es:
-                messagebox.showerror("Error", f"Error due to: {str(es)}")
+            except mysql.connector.Error as err:
+                messagebox.showerror("Error", f"Error connecting to database: {err}")
 
-    def open_login_window(self):
+    def open_register_window(self):
         try:
-            login_path = os.path.join(r"C:\Users\Pongo\Pemrograman-Berbasis-Objek-Kelompok-2024\pythonpbo", "login.py")
-            subprocess.Popen(["python", login_path])
+            register_path = os.path.join(r"D:\PBOfix", "register.py")
+            subprocess.Popen(["python", register_path])
         except Exception as e:
-            messagebox.showerror("Error", f"Failed to open login window: {e}")
+            messagebox.showerror("Error", f"Failed to open register window: {e}")
 
+    def open_pagegrup_window(self):
+        try:
+            landing_path = os.path.join(r"D:\PBOfix", "hos.py")
+            subprocess.Popen(["python", landing_path])
+        except Exception as e:
+            messagebox.showerror("Error", f"Failed to open page group window: {e}")
 
-if __name__ == "__main__":  
+    def open_forget_password_window(self):
+        self.new_window = Toplevel(self.root)
+        self.app = ForgetPassword_Window(self.new_window)
+
+class ForgetPassword_Window:
+    def __init__(self, root):
+        self.root = root
+        self.root.title("Forget Password")
+        self.root.geometry("400x550+500+150")
+
+        title = Label(self.root, text="Forget Password", font=("times new roman", 20, "bold"), fg="red")
+        title.place(x=0, y=10, relwidth=1)
+
+        email_label = Label(self.root, text="Email", font=("times new roman", 15, "bold"), fg="black")
+        email_label.place(x=50, y=80)
+        self.email_entry = ttk.Entry(self.root, font=("times new roman", 15, "bold"))
+        self.email_entry.place(x=50, y=110, width=300)
+
+        security_q_label = Label(self.root, text="Select Security Question", font=("times new roman", 15, "bold"), fg="black")
+        security_q_label.place(x=50, y=160)
+        self.security_q_combo = ttk.Combobox(self.root, font=("times new roman", 15, "bold"), state="readonly")
+        self.security_q_combo["values"] = ("Your Crush", "Your Birth Place", "Your Bestfriend", "Your School Name")
+        self.security_q_combo.place(x=50, y=190, width=300)
+        self.security_q_combo.current(0)
+
+        security_a_label = Label(self.root, text="Security Answer", font=("times new roman", 15, "bold"), fg="black")
+        security_a_label.place(x=50, y=240)
+        self.security_a_entry = ttk.Entry(self.root, font=("times new roman", 15, "bold"))
+        self.security_a_entry.place(x=50, y=270, width=300)
+
+        new_pass_label = Label(self.root, text="New Password", font=("times new roman", 15, "bold"), fg="black")
+        new_pass_label.place(x=50, y=320)
+        self.new_pass_entry = ttk.Entry(self.root, font=("times new roman", 15, "bold"), show='*')
+        self.new_pass_entry.place(x=50, y=350, width=300)
+
+        confirm_pass_label = Label(self.root, text="Confirm Password", font=("times new roman", 15, "bold"), fg="black")
+        confirm_pass_label.place(x=50, y=390)
+        self.confirm_pass_entry = ttk.Entry(self.root, font=("times new roman", 15, "bold"), show='*')
+        self.confirm_pass_entry.place(x=50, y=420, width=300)
+
+        reset_btn = Button(self.root, text="Reset Password", command=self.reset_password, font=("times new roman", 15, "bold"), bd=3, relief=RIDGE, fg="white", bg="red", activeforeground="white", activebackground="red")
+        reset_btn.place(x=125, y=470, width=150)
+
+    def reset_password(self):
+        if self.email_entry.get() == "" or self.security_a_entry.get() == "" or self.new_pass_entry.get() == "" or self.confirm_pass_entry.get() == "":
+            messagebox.showerror("Error", "All fields are required")
+        elif self.new_pass_entry.get() != self.confirm_pass_entry.get():
+            messagebox.showerror("Error", "New Password and Confirm Password must match")
+        else:
+            try:
+                conn = mysql.connector.connect(
+                    host="localhost",
+                    user="root",
+                    password="",
+                    database="userdata"
+                )
+                cursor = conn.cursor()
+                query = "SELECT * FROM register WHERE email=%s AND securityQ=%s AND securityA=%s"
+                value = (self.email_entry.get(), self.security_q_combo.get(), self.security_a_entry.get())
+                cursor.execute(query, value)
+                row = cursor.fetchone()
+                if row:
+                    # Pastikan password diperbarui di database
+                    query = "UPDATE register SET password=%s WHERE email=%s"
+                    value = (self.new_pass_entry.get(), self.email_entry.get())
+                    cursor.execute(query, value)
+                    conn.commit()
+                    
+                    # Pastikan password diperbarui dengan mengambil kembali data dari database
+                    cursor.execute("SELECT password FROM register WHERE email=%s", (self.email_entry.get(),))
+                    new_password = cursor.fetchone()[0]
+                    
+                    if new_password == self.new_pass_entry.get():
+                        messagebox.showinfo("Success", "Your password has been reset successfully")
+                        self.root.destroy()
+                    else:
+                        messagebox.showerror("Error", "Failed to update password, please try again")
+                else:
+                    messagebox.showerror("Error", "Incorrect security answer or email")
+                conn.close()
+            except mysql.connector.Error as err:
+                messagebox.showerror("Error", f"Error connecting to database: {err}")
+
+if __name__ == "__main__":
     root = Tk()
-    app = Register(root)
+    app = Login_Window(root)
     root.mainloop()
