@@ -9,13 +9,13 @@ class Login_Window:
     def __init__(self, root):
         self.root = root
         self.root.title("Login")
-        # Mendapatkan lebar dan tinggi layar
+        
         screen_width = self.root.winfo_screenwidth()
         screen_height = self.root.winfo_screenheight()
 
         # Menghitung posisi x dan y untuk menengahkan window
-        x_position = int((screen_width/2) - (1550/2))  # Lebar window = 1550
-        y_position = int((screen_height/2) - (800/2))  # Tinggi window = 800
+        x_position = int((screen_width/2) - (1550/2)) 
+        y_position = int((screen_height/2) - (800/2))  
 
         # Set geometry dengan posisi yang telah dihitung
         self.root.geometry(f"1550x800+{x_position}+{y_position}")
