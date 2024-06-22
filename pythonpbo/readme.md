@@ -5,4 +5,4 @@ Panduan eksekusi di localhost:
 1. Pindahkan seluruh folder ke path yang diiginkan
 2. Modifikasi path agar sesuai dengan yang ada di localhost
 3. Import sqldump yang ada
-4. jalankan register untuk membuat user baru, loginhost untuk masuk dengan user baru, dan host untuk mengakses database + menambaha prescription
+4. Jalankan register untuk membuat user baru, loginhost untuk masuk dengan user baru, dan host untuk mengakses database + menambahkan prescription
